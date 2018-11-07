@@ -1,17 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>Webzip</h1>
+    <p class="error">{{ error }}</p>
+    <FilePicker :onSelect="onFileSelected"></FilePicker>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import FilePicker from '@/components/FilePicker.vue'
+import FileEncoder from '@/services/FileEncoder.js'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    FilePicker 
+  },
+  data() {
+    return {
+      error: ''
+    }
+  },
+  methods: {
+    onFileSelected(file) {
+      FileEncoder.encodeFile(file).then(encodedFile => {
+        console.log('encoded file', encodedFile)
+      }).catch(error => {
+        this.error = error.message
+      })
+    }
   }
 }
 </script>
@@ -24,5 +40,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+#app .error {
+  color: rgb(185, 33, 33);
 }
 </style>
