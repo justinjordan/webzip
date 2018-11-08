@@ -58,9 +58,10 @@ export default {
     }
   },
   methods: {
-    onFileSelected(file) {
+    onFileSelected(files) {
       this.compressing = true;
 
+      // mock processing for UI testing
       this.interval = setInterval(() => {
         this.progress += 20
         
@@ -74,12 +75,12 @@ export default {
         }
       }, 1000)
 
-      FileEncoder.encodeFile(file).then(encodedFile => {
+      FileEncoder.encodeFiles(files).then(encodedFiles => {
         this.files.push({
           name: 'Somefile',
           success: true,
         })
-        console.log('encoded file', encodedFile)
+        console.log('encoded file', encodedFiles)
       }).catch(error => {
         this.error = error.message
       })

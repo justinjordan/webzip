@@ -51,7 +51,7 @@ export default {
       this.$refs.fileInput.click()
     },
     onFileSelect(e) {
-      this.onSelect(e.target.files[0])
+      this.onSelect(e.target.files)
     }
   }
 }

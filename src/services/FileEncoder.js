@@ -1,14 +1,15 @@
+// import 'emscripten-main.js'
+
 class FileEncoder
 {
-  encodeFile(file) {
+  encodeFiles(files) {
     return new Promise((resolve, reject) => {
-      file.data = "[123]"
-      resolve(file)
-    })
-  }
-
-  readFile(file) {
-    return new Promise((resolve, reject) => {
+      
+      // Mount WASM filesystem
+      // FS.mkdir('/working')
+      // FS.mount(WORKERFS, {
+      //   files: files
+      // }, '/working')
 
     })
   }
