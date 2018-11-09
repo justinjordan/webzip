@@ -29,7 +29,7 @@ import {
   VSpacer,
   VToolbar,
   VToolbarTitle,
-  VToolbarSideIcon,
+  // VToolbarSideIcon,
 } from 'vuetify/lib'
 import FilePicker from '@/components/FilePicker.vue'
 import FileList from '@/components/FileList.vue'
@@ -46,7 +46,7 @@ export default {
     VSpacer,
     VToolbar,
     VToolbarTitle,
-    VToolbarSideIcon,
+    // VToolbarSideIcon,
   },
   data() {
     return {
