@@ -4,17 +4,13 @@
       <v-toolbar-title>WebZip</v-toolbar-title>
       <v-spacer></v-spacer>
 
-      <FilePicker
-        :onSelect="onFileSelected"
-        :loading="compressing"
-        :progress="progress"
-      ></FilePicker>
+      <FilePicker :onSelect="onFileSelected"></FilePicker>
 
     </v-toolbar>
     <v-content>
       <v-container fluid>
 
-        <FileList :files="files"></FileList>
+        <ProcessList :processes="processes"></ProcessList>
 
       </v-container>
     </v-content>
@@ -32,13 +28,13 @@ import {
   // VToolbarSideIcon,
 } from 'vuetify/lib'
 import FilePicker from '@/components/FilePicker.vue'
-import FileList from '@/components/FileList.vue'
+import ProcessList from '@/components/ProcessList.vue'
 import FileEncoder from '@/services/FileEncoder.js'
 
 export default {
   name: 'app',
   components: {
-    FileList,
+    ProcessList,
     FilePicker,
     VApp,
     VContainer,
@@ -51,39 +47,14 @@ export default {
   data() {
     return {
       error: '',
-      files: [],
+      processes: [],
       alert: true,
-      compressing: false,
-      progress: 0,
     }
   },
   methods: {
     onFileSelected(files) {
-      this.compressing = true;
-
-      // mock processing for UI testing
-      this.interval = setInterval(() => {
-        this.progress += 20
-        
-        if (this.progress >= 100) {
-          clearInterval(this.interval)
-
-          setTimeout(() => {
-            this.compressing = false
-            this.progress = 0
-          }, 1000)
-        }
-      }, 1000)
-
-      FileEncoder.encodeFiles(files).then(encodedFiles => {
-        this.files.push({
-          name: 'Somefile',
-          success: true,
-        })
-        console.log('encoded file', encodedFiles)
-      }).catch(error => {
-        this.error = error.message
-      })
+      const encoder = new FileEncoder(files)
+      this.processes.unshift(encoder)
     }
   }
 }
