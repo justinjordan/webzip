@@ -1,19 +1,12 @@
 #include <emscripten/emscripten.h>
 #include <iostream>
-#include <fstream>  
+// #include <fstream>  
 #include <unistd.h>  
 
 extern "C" {
-  int EMSCRIPTEN_KEEPALIVE fileExists()
+  int EMSCRIPTEN_KEEPALIVE getProcessId(char* dir)
   {
-    return (access("/hello.txt", F_OK) != -1);
-  }
-
-  int EMSCRIPTEN_KEEPALIVE createFiles()
-  {
-    std::ofstream outfile("/hello.txt");
-    outfile << "Hello, world!" << std::endl;
-    outfile.close();
+    std::cout << dir;
 
     return 0;
   }

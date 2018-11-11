@@ -1,24 +1,10 @@
 class FileEncoder
 {
-  constructor(files) {
-    this.files = files
+  constructor() {
     this.status = 'Pending'
     this.progress = null
     this.complete = false
-    this.filename = 'archive' + this.getRandomHash(10) + '.zip'
-
-    setTimeout(() => {
-      this.status = 'Encoding'
-      this.progress = 0
-
-      let interval = setInterval(() => {
-        this.progress += 1
-        if (this.progress >= 100) {
-          clearInterval(interval)
-          this.processComplete()
-        }
-      }, 50)
-    }, 1000)
+    this.filename = 'archive-' + this.getRandomHash(10) + '.zip'
   }
 
   getRandomHash(length) {
@@ -38,13 +24,21 @@ class FileEncoder
   }
 
   encodeFiles(files) {
-    var encoder = new Worker('/js/encoder.js')
+    return new Promise((resolve, reject) => {
+      const encoder = new Worker('/js/encoder.js')
 
-    encoder.onmessage = e => {
-      console.log(e)
-    }
+      encoder.onmessage = e => {
+        this.progress = e.data.progress
+        this.status = e.data.status
+        this.complete = e.data.complete
+        this.archiveFile = e.data.archiveFile
+      }
 
-    encoder.postMessage(files)
+      encoder.postMessage({
+        id: this.getRandomHash(8),
+        files: files,
+      })
+    })
   }
 }
 

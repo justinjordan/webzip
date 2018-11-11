@@ -53,7 +53,10 @@ export default {
   },
   methods: {
     onFileSelected(files) {
-      const encoder = new FileEncoder(files)
+      const encoder = new FileEncoder()
+      encoder.encodeFiles(files).then(response => {
+
+      })
       this.processes.unshift(encoder)
     }
   }

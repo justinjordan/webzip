@@ -8,8 +8,15 @@
         <v-list-tile avatar :key="process.filename">
 
           <v-list-tile-avatar>
-            <v-icon v-if="process.complete">check_circle</v-icon>
-            <v-icon v-else>archive</v-icon>
+            <template v-if="process.complete && !process.error">
+              <v-icon>check_circle</v-icon>
+            </template>
+            <template v-else-if="process.complete && process.error">
+              <v-icon>check_circle</v-icon>
+            </template>
+            <template v-else>
+              <v-icon>archive</v-icon>
+            </template>
           </v-list-tile-avatar>
 
           <v-list-tile-content>
