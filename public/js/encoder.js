@@ -1,23 +1,23 @@
-onmessage(e) {
-  const files = e.data.files
+onmessage = function(e) {
 
-  let id = e.data.id
-  let dirname = '/' + id
-  let status = 'Encoding'
-  let progress = 0
-  let complete = false
-  let archiveFile = null
+  console.log(this)
 
-  FS.mkdir(dirname)
-  FS.mount(WORKERFS, {
-    files: files
-  }, dirname);
+  return
 
-  let process = _getProcessId(dirname)
+  var files = e.data.files
+  var id = e.data.id
+  var dirname = e.data.dirname
 
-  // setInterval(() => {
+  var status = 'Encoding'
+  var progress = 0
+  var complete = false
+  var archiveFile = null
+
+  // var process = _getProcessId(dirname)
+
+  // setInterval(function() {
   //   progress = _getProgress(process)
   // }, 1000)
 
-  _compressFiles(process)
+  // _compressFiles(process)
 }

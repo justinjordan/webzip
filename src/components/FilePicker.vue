@@ -5,6 +5,9 @@
       style="display: none;"
       @change="onFileSelect"
       ref="fileInput"
+      multiple
+      webkitdirectory
+      directory
     >
     <v-btn
       :loading="loading"

@@ -1,13 +1,37 @@
 #include <emscripten/emscripten.h>
 #include <iostream>
-// #include <fstream>  
-#include <unistd.h>  
+#include <unistd.h>
+#include <dirent.h>
+#include <string>
+
+#include "webzip.hpp"
+
+using namespace Webzip;
 
 extern "C" {
-  int EMSCRIPTEN_KEEPALIVE getProcessId(char* dir)
-  {
-    std::cout << dir;
+    void EMSCRIPTEN_KEEPALIVE getDirectoryContents(char* dir)
+    {
+        DIR* dirp;
+        dirent* dp;
 
-    return 0;
-  }
+        dirp = opendir(dir);
+        if (dirp == NULL) {
+            std::cerr << "Directory " << dir << " not found." << std::endl;
+            return;
+        }
+
+        while ((dp = readdir(dirp)) != NULL) {
+            std::cout << dp->d_name << std::endl;
+        }
+
+        closedir(dirp);
+    }
+
+    void EMSCRIPTEN_KEEPALIVE compressDirectory(std::string dir)
+    {
+        std::string outputPath = dir;
+        outputPath += ".zip";
+
+        Encoder::encodeDir(dir.c_str(), outputPath.c_str());
+    }
 }

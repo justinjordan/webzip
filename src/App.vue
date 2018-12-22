@@ -54,9 +54,14 @@ export default {
   methods: {
     onFileSelected(files) {
       const encoder = new FileEncoder()
-      encoder.encodeFiles(files).then(response => {
+      encoder.encodeFiles(files)
+        .then(response => {
 
-      })
+        })
+        .catch(err => {
+          console.error(err)
+        })
+
       this.processes.unshift(encoder)
     }
   }
